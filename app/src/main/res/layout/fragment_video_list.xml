@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#10000000"
+    android:id="@+id/fragment_video_list"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/videoParentView"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                android:id="@+id/video_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:use_controller="true"
+                app:show_timeout="10000"
+                app:repeat_toggle_modes="one"
+                app:fastforward_increment="30000"
+                app:rewind_increment="30000"/>
+
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="210dp" />
+
+            <ImageButton
+                android:id="@+id/closeVideoViewImgBtn"
+                android:layout_gravity="right"
+                android:padding="15dp"
+                android:background="@drawable/roundedcorner"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"/>
+
+        </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@id/videoParentView"
+            android:id="@+id/videoListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+    </RelativeLayout>
+
+
+    <ImageButton
+        android:id="@+id/floatBtn"
+        android:layout_gravity="top"
+        android:layout_margin="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+</RelativeLayout>
