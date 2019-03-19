@@ -23,18 +23,6 @@ public class MainActivity extends AppCompatActivity {
         videoListFragment = VideoListFragment.getInstance(this);
         addFragment(videoListFragment);
 
-
-        /*if(savedInstanceState == null){
-            if(videoListFragment == null) {
-                videoListFragment = VideoListFragment.getInstance(this);
-                addFragment(videoListFragment);
-            }
-        } else{
-            if(videoListFragment == null) {
-                videoListFragment = VideoListFragment.getInstance(this);
-            }
-        }*/
-
     }
 
 
