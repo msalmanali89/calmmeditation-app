@@ -1,9 +1,13 @@
 package com.view.lift.calmmeditation.dto;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementArray;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.NamespaceList;
+import org.simpleframework.xml.Order;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Text;
 
 import java.util.List;
 
@@ -20,6 +24,45 @@ public class Item {
 
     @Element(name = "link")
     private String link;
+
+    public String getCategory() {
+        return category;
+    }
+
+    //@Element(name = "category", required = false )
+    //@Path("category")
+    //@Order
+    private String category;
+
+
+    public String getCategory2() {
+        return category2;
+    }
+
+
+    public List<String> getCategoryList() {
+        return categoryList;
+    }
+
+    @ElementList(entry = "category", inline = true)
+    private List<String> categoryList;
+
+    //@Root(name = "media:category", strict = true)
+    public class Category{
+
+
+        public String getCategory() {
+            return category;
+        }
+
+        String category;
+
+    }
+
+    //@Path("category")
+    //@Text(required=true)
+    //@Order
+    private String category2;
 
     @Element(name = "description")
     private String description;

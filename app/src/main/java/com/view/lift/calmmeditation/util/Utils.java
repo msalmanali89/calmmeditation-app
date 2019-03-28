@@ -17,6 +17,11 @@ import android.widget.Toast;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.view.lift.calmmeditation.dto.Item;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Utils {
     static  String TAG = "Utils";
@@ -72,5 +77,33 @@ public class Utils {
             }
         }
         return false;
+    }
+
+
+    public static ArrayList<Object> convertData(List<Item> items){
+
+        HashMap<String,ArrayList<Item>> categoricalItems = new HashMap<>();
+
+        for(Item item : items) {
+
+            int position = item.getCategoryList().size()-1;
+            String cat =  item.getCategoryList().get(position);
+
+            if(categoricalItems.containsKey(cat)) {
+              ArrayList<Item> itemArrayList =   categoricalItems.get(cat);
+                itemArrayList.add(item);
+                categoricalItems.put(cat,itemArrayList);
+            }else{
+                ArrayList<Item> itemArrayList = new ArrayList<>();
+                itemArrayList.add(item);
+                categoricalItems.put(cat,itemArrayList);
+
+            }
+
+        }
+
+
+
+        return  new ArrayList<>(categoricalItems.values());
     }
 }

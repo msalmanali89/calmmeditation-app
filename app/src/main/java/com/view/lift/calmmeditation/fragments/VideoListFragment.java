@@ -35,6 +35,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.Util;
 import com.view.lift.calmmeditation.R;
 import com.view.lift.calmmeditation.adapter.VideoListAdapter;
+import com.view.lift.calmmeditation.adapter.VideoListMainAdapter;
 import com.view.lift.calmmeditation.dto.Feed;
 import com.view.lift.calmmeditation.dto.Item;
 import com.view.lift.calmmeditation.interfaces.ItemClick;
@@ -42,6 +43,7 @@ import com.view.lift.calmmeditation.util.Utils;
 import com.view.lift.calmmeditation.viewmodels.VideoViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VideoListFragment extends Fragment implements ItemClick, ExoPlayer.EventListener{
 
@@ -50,7 +52,8 @@ public class VideoListFragment extends Fragment implements ItemClick, ExoPlayer.
     private View root;
     private RecyclerView videoListRecyclerView;
     private  GridLayoutManager gridLayoutManager;
-    private VideoListAdapter videoListAdapter;
+    ///private VideoListAdapter videoListAdapter;
+    private VideoListMainAdapter videoListMainAdapter;
 
     private VideoViewModel videoViewModel;
     private FrameLayout videoViewFrameLayout;
@@ -135,8 +138,10 @@ public class VideoListFragment extends Fragment implements ItemClick, ExoPlayer.
 
                 if(feed !=  null) {
                     currentFeed = feed;
-                    videoListAdapter.setDataSet(feed.getArticleList());
-                    videoListAdapter.notifyDataSetChanged();
+
+
+                    videoListMainAdapter.setDataSet(Utils.convertData(feed.getArticleList()));
+                    videoListMainAdapter.notifyDataSetChanged();
                 }else{
 
                     Toast.makeText(getActivity().getApplicationContext(),"Not connected to any network!",Toast.LENGTH_SHORT).show();
@@ -151,7 +156,17 @@ public class VideoListFragment extends Fragment implements ItemClick, ExoPlayer.
         int orientation = getResources().getConfiguration().orientation;
 
 
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if(gridLayoutManager == null){
+            gridLayoutManager = new GridLayoutManager(getContext(),1);
+            videoListRecyclerView.setLayoutManager(gridLayoutManager);
+        }
+
+        if(videoListMainAdapter == null) {
+            videoListMainAdapter = new VideoListMainAdapter(getContext(), this, new ArrayList<Object>(), orientation);
+            videoListRecyclerView.setAdapter(videoListMainAdapter);
+        }
+
+        /*if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
             if(gridLayoutManager == null){
                 gridLayoutManager = new GridLayoutManager(getContext(),2);
@@ -177,6 +192,7 @@ public class VideoListFragment extends Fragment implements ItemClick, ExoPlayer.
         }
 
         videoListAdapter.setOrientation(orientation);
+        */
     }
 
 
@@ -198,7 +214,7 @@ public class VideoListFragment extends Fragment implements ItemClick, ExoPlayer.
     }
 
 
-    private void initializePlayer() {
+    public void initializePlayer() {
 
         player = ExoPlayerFactory.newSimpleInstance(this.getContext(),new DefaultRenderersFactory(this.getContext()),new DefaultTrackSelector(), new DefaultLoadControl());
         playerView.setPlayer(player);
